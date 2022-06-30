@@ -36,6 +36,7 @@ function App() {
           <label htmlFor={id}>Nome no cartao</label>
           <Input id={id} onInput={e => setName(e.target.value.toUpperCase())} />          
           <Input id={id} onInput={e => setName(e.target.value.toUpperCase())} />          
+          <Input id={id} onInput={e => setName(e.target.value.toUpperCase())} />          
 
           <label htmlFor={id}>Numero do cartao</label>
           <Input id={id} onInput={e => setNumber(e.target.value.toUpperCase())} />  
