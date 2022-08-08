@@ -1,66 +1,100 @@
+import React from 'react'
+import ReactDOM from 'react-dom'
+
 import { useId, useState} from 'react'
 
-import { Card } from './components/Card';
-import { Input } from './components/Form/Input/styled'
-import { Container } from './components/Container/styled';
-import { FormWrapper, OptionsDivs } from './components/Form/FormWrapper/styled'
 
-import { Wrapper } from './components/Card/styled';
+import { Card } from './components/Card';
+import { Input, Label } from './components/Form/Input/styled'
+import { Container } from './components/Container/styled';
+import { Form, OptionsDivs, FormWrapper, BottomWrapper } from './components/Form/FormWrapper/styled'
+
+
+import visa from './images/visa.png'
+import master from './images/mastercard.jpg'
+
 
 import './App.css';
 
 function App() {
-  const id = useId()
-  const [count, setCount] = useState(0)
+  const id = useId()  
+  const [isVisa, setIsVisa] = useState(false)
+  const [isMaster, setIsMaster] = useState(false)
   const [name, setName] = useState('')
-  const [month, setMonth] = useState(['Jan, Fev, Mar, Abr, Mai, Jun, Jul, Ago, Set, Out, Nov, Dez'])
-  const [year, setYear] = useState(['2021, 2022, 2023, 2024'])
+  const [date, setDate] = useState('')
   const [number, setNumber] = useState('')
+  const [brandImage, setBrandImage] = useState([])
 
-  function handleYearPicker(e){
-    setYear(e.target.value)
-    console.log(year)
+
+  function creditCardValidation(e){    
+    const visaReg = /^(?:4[0-9]{12}(?:[0-9]{3})?)$/
+    const masterReg = /^(?:5[1-5][0-9]{14})$/
+    
+    setNumber((e.target.value).toUpperCase())   
+    
+
+    if(visaReg.test(number) === true) {
+      setIsVisa(true)
+      setBrandImage(visa)
+    }
+    if(masterReg.test(number) === true){
+      setIsMaster(true)
+      setBrandImage(master)
+    }
+    
+    console.log('img',brandImage)
+    console.log('e',e)
+    console.log(`NUMERO${number}`)
+    console.log('VISA', isVisa)
+    console.log('MASTER',isMaster)
   }
 
-  function handleMonthPicker(e){
-    setMonth(e.target.value)
-    console.log(year)
+  function handleDatePiker(e){
+    setDate(e.target.value)
   }
 
 
   return (
+    <>
     <Container>
-      <Card name={name} number={number}/>  
+      <h1>Credit Card - UI</h1>
+      <h3>Project using React and Styled-Components</h3>
+      <h3>{isVisa}</h3>
+      <Card 
+        name={name}
+        number={number} 
+        date={date}
+        logo={brandImage} />  
 
-        <FormWrapper>
-          <label htmlFor={id}>Nome no cartao</label>
-          <Input id={id} onInput={e => setName(e.target.value.toUpperCase())} />          
-          <Input id={id} onInput={e => setName(e.target.value.toUpperCase())} />          
-          <Input id={id} onInput={e => setName(e.target.value.toUpperCase())} />          
-
-          <label htmlFor={id}>Numero do cartao</label>
-          <Input id={id} onInput={e => setNumber(e.target.value.toUpperCase())} />  
+        <Form>
+          <FormWrapper>
+          
+            <Label htmlFor={id}>Numero do cartao</Label>
+            <Input 
+              id={id} 
+              maxLength={16} 
+              onInput = {(e) => creditCardValidation(e)}
+            />
+            <Label htmlFor={id}>Nome no cartao</Label>
+            <Input id={id} maxLength={20} onInput={e => setName(e.target.value.toUpperCase())} />                                         
+          </FormWrapper>
 
           <OptionsDivs>
-            <label htmlFor={id}>Ano expiração</label>
-            <select
-              defaultValue={year[0]}  
-              onChange={handleYearPicker}
-            >
-              <option id={id}></option>
-            </select>
-            <option id={id}></option>
+            <BottomWrapper>
+              <Label htmlFor={id}>Data expirção</Label>
+              <Input id={id} maxLength={4} onInput={e => setDate(e.target.value)} />              
+            </BottomWrapper>            
+            <BottomWrapper>
+              <Label htmlFor={id}>CVV</Label>
+              <Input id={id} maxLength={3}></Input>
+            </BottomWrapper>
 
-            <label htmlFor={id}>Mes</label>
-            <option id={id}>Teste</option>
-
-            <label htmlFor={id}>CVV</label>
-            <Input id={id}></Input>
           </OptionsDivs> 
                          
-        </FormWrapper>  
+        </Form>  
 
     </Container>
+    </>
   );
 }
 

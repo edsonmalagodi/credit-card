@@ -1,20 +1,31 @@
 import styled from "styled-components";
 
-export const FormWrapper = styled.div`
-  width: 80%;
-  height: 350px;
+export const Form = styled.div` 
+  width: 500px;
+  height: 280px;
   display: flex;
   flex-direction: column;
-  padding-top: 60px;
-  align-items: flex-start;
-  justify-content: flex-start;
+  margin-top: 100px;
   border-radius: 10px;
-  background-color: #f1f1f1;
+  background-color: #FFF;
   display: flex;
+
+  box-shadow: 10px 10px 10px 10px #e2dfdf;
+`
+
+export const FormWrapper = styled.div`
+  margin: 40px 35px;
+  display: flex;
+  flex-direction: column;
+  width: 500px;  
+
+`
+
+export const BottomWrapper = styled(FormWrapper)`
+  width: 110px;
+  margin-top: 10px;
 `
 
 export const OptionsDivs = styled.div`
   display: flex;
-  justify-content: space-between;
-  flex-direction: row;
 `
